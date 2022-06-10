@@ -44,6 +44,7 @@ def parse_collection(response):
 
 
 def main():
+    # Testing (must cut)
     collect_data('utmn.ru')
     json_res = read_data_from_json('info')
     print(parse_collection(json_res))

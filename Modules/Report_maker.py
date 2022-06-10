@@ -7,6 +7,7 @@ from Port_scanner import port_scanner
 
 HEADER = ['Domain', 'IsAlive', 'IP', 'Ports', 'Technologies', 'Comments', 'Sources']
 
+
 def structure(domain, alive, ip, ports, techs, comments, sources):
     struct = dict()
     struct['Domain'] = domain
@@ -17,6 +18,7 @@ def structure(domain, alive, ip, ports, techs, comments, sources):
     struct['Comments'] = comments
     struct['Sources'] = sources
     return struct
+
 
 def make_report():
     pass
