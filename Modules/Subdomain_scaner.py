@@ -1,7 +1,8 @@
 import json
+from datetime import datetime
 
 import requests
-from datetime import datetime
+
 HEADERS = {
     # API-ключ от аккаунта Евнгения
     # email - paholap485@musezoo.com
@@ -21,6 +22,12 @@ def collect_data(domain):
     return response
 
 
+def read_data_from_json(filename):
+    with open(f'../logs/{filename}.json', 'r', encoding='utf-8') as file:
+        json_res = json.load(file)
+    return json_res
+
+
 def parse_collection(response):
     data = response['data']
     res = []
@@ -38,10 +45,9 @@ def parse_collection(response):
 
 def main():
     collect_data('utmn.ru')
-    with open(f'../logs/info.json', 'r', encoding='utf-8') as file:
-        json_res = json.load(file)
-        print(parse_collection(json_res))
-        print(parse_collection(json_res)[0])
+    json_res = read_data_from_json('info')
+    print(parse_collection(json_res))
+    print(parse_collection(json_res)[0][1])
 
 
 if __name__ == '__main__':
