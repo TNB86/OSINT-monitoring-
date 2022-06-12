@@ -12,24 +12,27 @@ HEADERS = {
 
 # URL для поиска поддоменов и их ip
 URL = 'https://www.virustotal.com/api/v3/domains/'
+DATE = datetime.now().strftime('%d_%m_%Y')
 
 
 def collect_data(domain):
-    response = requests.get(URL + domain + '/subdomains?limit=40', headers=HEADERS)
-    t_date = datetime.now().strftime('%d_%m_%Y')
-    with open(f'../logs/{domain}-{t_date}.json', 'w') as file:
+    response = requests.get(URL + f'{domain}/subdomains?limit=40', headers=HEADERS)
+    with open(f'logs/{domain}-{DATE}.json', 'w') as file:
         json.dump(response.json(), file, indent=4, ensure_ascii=False)
     return response
 
 
-def read_data_from_json(filename):
+def get_json(filename):
     with open(f'../logs/{filename}.json', 'r', encoding='utf-8') as file:
         json_res = json.load(file)
     return json_res
 
 
 def parse_collection(response):
-    data = response['data']
+    if type(response) is dict:
+        data = response['data']
+    else:
+        data = response.json()['data']
     res = []
     for item in data:
         id = item.get('id')  # Домен
@@ -44,11 +47,7 @@ def parse_collection(response):
 
 
 def main():
-    # Testing (must cut)
-    collect_data('utmn.ru')
-    json_res = read_data_from_json('info')
-    print(parse_collection(json_res))
-    print(parse_collection(json_res)[0][1])
+    pass
 
 
 if __name__ == '__main__':
