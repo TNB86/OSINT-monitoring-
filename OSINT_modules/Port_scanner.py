@@ -10,7 +10,7 @@ def port_scanner(target):
     open_ports = [target, []]
     try:
         # for scanning all open ports put 65536 instead of 1024 in port (mach longer output)
-        for port in range(1, 27):
+        for port in range(1, 1024):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             socket.setdefaulttimeout(1)
             result = s.connect_ex((target, port))
